@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { add, subtract, loadData } from "../actions";
+import { getValue, getError, getGoals } from "./selectors";
 
 const ContentContainer = styled.div.attrs(() => ({
   className: `d-flex flex-column`,
@@ -48,21 +49,23 @@ const ApiData = styled.div.attrs(() => ({
 const GoalsWrapper = styled.div.attrs(() => ({
   className: `d-flex flex-column`,
 }))`
-  border: solid;
-  `;
+  /* border: solid; */
+`;
 
 const GoalData = styled.div.attrs(() => ({
-  className: `d-flex`,
-}))``;
+  className: `d-flex flex-column`,
+}))`
+  border: solid;
+`;
 
 const ErrorWrapper = styled.div.attrs(() => ({
-  className:`d-flex`
+  className: `d-flex`,
 }))`
   padding: 20px;
   color: white;
   background: red;
   border-radius: 2px;
-`
+`;
 
 class Landing extends Component {
   render() {
@@ -82,9 +85,11 @@ class Landing extends Component {
           <DefaultButton onClick={this.props.loadData}>GET DATA</DefaultButton>
           {error && <ErrorWrapper>{JSON.stringify(error)}</ErrorWrapper>}
           <GoalsWrapper>
-            {goals.map((goal) => (
+            {/* {goals.map((goal) => (
               <GoalData key={goal.id}>{goal.goalTitle}</GoalData>
-            ))}
+            ))} */}
+
+            <GoalData>{goals}</GoalData>
           </GoalsWrapper>
         </ApiData>
       </ContentContainer>
@@ -92,10 +97,10 @@ class Landing extends Component {
   }
 }
 
-const mapStateToProps = ({ value, goals, error }) => ({
-  value,
-  goals,
-  error
+const mapStateToProps = (state) => ({
+  value: getValue(state),
+  goals: getGoals(state),
+  error: getError(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

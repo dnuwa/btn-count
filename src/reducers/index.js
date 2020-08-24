@@ -9,9 +9,6 @@ const rootReducer = combineReducers({
   goals: fetchingReducer,
   loading: loadingReducer,
   error: errorReducer,
-  // images: imagesReducer,
-  // error: errorReducer,
-  // nextPage: pageReducer,
 });
 
 export default rootReducer;
